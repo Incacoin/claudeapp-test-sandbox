@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presiona y gana</title>
+  <style>
+    /* Estilos de la pagina: colores, tamanos y posiciones */
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f4f4f8;
+      color: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    /* El contador de dinero */
+    #total {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #14833b;
+      margin: 16px 0 24px;
+    }
+
+    /* El boton */
+    #boton {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #2b59d8;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 28px;
+      cursor: pointer;
+    }
+
+    #boton:hover {
+      background: #1f45ad;
+    }
+
+    /* Se achica un poquito al presionarlo */
+    #boton:active {
+      transform: scale(0.96);
+    }
+
+    #mensaje {
+      margin-top: 20px;
+      min-height: 24px;
+      color: #55556b;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Presiona y te ganas 100 pesos</h1>
+
+  <!-- Aqui se muestra el total acumulado -->
+  <div id="total">$0</div>
+
+  <button id="boton">Presiona aqui</button>
+
+  <p id="mensaje"></p>
+
+  <script>
+    // Guardamos cuanto dinero lleva ganado
+    let total = 0;
+
+    // Buscamos los elementos de la pagina para poder cambiarlos
+    const boton = document.getElementById('boton');
+    const textoTotal = document.getElementById('total');
+    const mensaje = document.getElementById('mensaje');
+
+    // Cada vez que se presiona el boton, se ejecuta esta funcion
+    boton.addEventListener('click', function () {
+      total = total + 100;
+      textoTotal.textContent = '$' + total;
+      mensaje.textContent = 'Ganaste 100 pesos! Llevas ' + total + ' en total.';
+    });
+  </script>
+
+</body>
+</html>
