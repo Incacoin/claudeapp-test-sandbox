@@ -29,30 +29,42 @@
     #total {
       font-size: 3rem;
       font-weight: 700;
-      color: #14833b;
       margin: 16px 0 24px;
     }
 
-    /* El boton */
-    #boton {
-      font-size: 1.2rem;
+    /* Fila que agrupa los botones y los deja bajar de linea en pantallas chicas */
+    #botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* Estilo comun de todos los botones */
+    button {
+      font-size: 1.1rem;
       font-weight: 600;
       color: #ffffff;
-      background: #2b59d8;
       border: none;
       border-radius: 12px;
-      padding: 16px 28px;
+      padding: 16px 24px;
       cursor: pointer;
     }
 
-    #boton:hover {
-      background: #1f45ad;
-    }
-
-    /* Se achica un poquito al presionarlo */
-    #boton:active {
+    /* Se achican un poquito al presionarlos */
+    button:active {
       transform: scale(0.96);
     }
+
+    /* Cada boton con su propio color */
+    #sumar { background: #2b59d8; }
+    #sumar:hover { background: #1f45ad; }
+
+    #restar { background: #d83a3a; }
+    #restar:hover { background: #ad2b2b; }
+
+    #reiniciar { background: #6b6b80; }
+    #reiniciar:hover { background: #55556b; }
 
     #mensaje {
       margin-top: 20px;
@@ -68,7 +80,11 @@
   <!-- Aqui se muestra el total acumulado -->
   <div id="total">$0</div>
 
-  <button id="boton">Presiona aqui</button>
+  <div id="botones">
+    <button id="sumar">Ganar 100</button>
+    <button id="restar">Perder 100</button>
+    <button id="reiniciar">Reiniciar</button>
+  </div>
 
   <p id="mensaje"></p>
 
@@ -77,15 +93,42 @@
     let total = 0;
 
     // Buscamos los elementos de la pagina para poder cambiarlos
-    const boton = document.getElementById('boton');
+    const botonSumar = document.getElementById('sumar');
+    const botonRestar = document.getElementById('restar');
+    const botonReiniciar = document.getElementById('reiniciar');
     const textoTotal = document.getElementById('total');
     const mensaje = document.getElementById('mensaje');
 
-    // Cada vez que se presiona el boton, se ejecuta esta funcion
-    boton.addEventListener('click', function () {
-      total = total + 100;
+    // Esta funcion refresca lo que se ve en pantalla.
+    // La usamos desde los tres botones para no repetir el mismo codigo.
+    function actualizar(texto) {
       textoTotal.textContent = '$' + total;
-      mensaje.textContent = 'Ganaste 100 pesos! Llevas ' + total + ' en total.';
+      mensaje.textContent = texto;
+
+      // El color del total cambia segun si estas arriba, abajo o en cero
+      if (total > 0) {
+        textoTotal.style.color = '#14833b';
+      } else if (total < 0) {
+        textoTotal.style.color = '#d83a3a';
+      } else {
+        textoTotal.style.color = '#55556b';
+      }
+    }
+
+    // Cada boton escucha su propio clic y ejecuta su funcion
+    botonSumar.addEventListener('click', function () {
+      total = total + 100;
+      actualizar('Ganaste 100 pesos! Llevas ' + total + ' en total.');
+    });
+
+    botonRestar.addEventListener('click', function () {
+      total = total - 100;
+      actualizar('Perdiste 100 pesos. Llevas ' + total + ' en total.');
+    });
+
+    botonReiniciar.addEventListener('click', function () {
+      total = 0;
+      actualizar('Volviste a empezar desde cero.');
     });
   </script>
 
